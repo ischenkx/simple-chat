@@ -1,0 +1,8 @@
+postgres:
+  url: "postgres://postgres:123456@127.0.0.1:5432/vk_test"
+jwt:
+  key: "123456-1234567-123"
+  expiration_time: 100000000000000
+http:
+  addr: "localhost"
+  port: 3232
