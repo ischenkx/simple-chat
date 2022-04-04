@@ -65,7 +65,11 @@ func main() {
 
 	bus := evbus.NewBus()
 
-	application := app.New(repo, auth, bus)
+	application := app.New(app.Config{
+		Repo:       repo,
+		Authorizer: auth,
+		Bus:        bus,
+	})
 
 	mux := web.NewRouter(application)
 	addr := fmt.Sprintf("%s:%d", cfg.HTTP.Addr, cfg.HTTP.Port)

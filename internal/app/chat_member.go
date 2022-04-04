@@ -27,7 +27,6 @@ type chatMember struct {
 
 func (member chatMember) exists(ctx *Context) bool {
 	if _, err := member.app.repo.GetChatMember(ctx, member.userID, member.chatID); err != nil {
-		log.Println(err)
 		return false
 	}
 	return true

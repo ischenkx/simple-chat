@@ -5,7 +5,6 @@ import (
 	"errors"
 	"github.com/golang-jwt/jwt"
 	"github.com/ischenkx/vk-test-task/internal/app/security"
-	"log"
 	"time"
 )
 
@@ -21,7 +20,6 @@ func (a *Auth) Verify(ctx context.Context, tokenString string) (userId string, e
 	})
 
 	if err != nil {
-		log.Println(err)
 		return "", errors.New("failed to parse token: " + err.Error())
 	}
 
