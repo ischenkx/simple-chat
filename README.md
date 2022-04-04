@@ -36,7 +36,7 @@ Note: in practice, an event bus can be used for real time notifications
 
 # How to run?
 1. Fix the `config.yml` file
-2. `go run cmd/web/main.go`
+2. `go run cmd/web/main.go config.yml`
 
 # How to use?
 Currently the most User-Friendly way to interact - is a cli tool that's located in `pkg/http/cli`
