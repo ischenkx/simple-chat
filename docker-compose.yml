@@ -1,0 +1,22 @@
+version: "3.9"
+services:
+  web:
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3232:3232"
+    links:
+      - postgres
+  postgres:
+    env_file:
+      - .env
+    image: postgres
+    volumes:
+      - data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+volumes:
+  data:

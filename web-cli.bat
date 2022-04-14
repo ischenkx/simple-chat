@@ -1,0 +1,1 @@
+go run ./pkg/http/cli/main.go %1

@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"errors"
+	"flag"
 	"fmt"
 	"github.com/ischenkx/vk-test-task/cmd/web/config"
 	"github.com/ischenkx/vk-test-task/internal/app"
@@ -13,35 +13,31 @@ import (
 	"github.com/jackc/pgx/v4/pgxpool"
 	"log"
 	"net/http"
-	"os"
 	"time"
 )
 
-func getConfigFileName() (string, error) {
-	if len(os.Args) < 2 {
-		return "", errors.New("config filename not provided")
+var EnvConfigFlag = flag.Bool("env-config", false, "tells the program to read the config from environment variables")
+var FileConfigFlag = flag.String("file-config", "config.yml", "tells the program to read the config from a file")
+
+func getConfig() (config.Config, error) {
+	if *EnvConfigFlag {
+		return config.FromENV()
 	}
-	return os.Args[1], nil
+
+	return config.FromFile(*FileConfigFlag)
 }
 
 func main() {
+	flag.Parse()
+
+	cfg, err := getConfig()
+
+	if err != nil {
+		log.Fatalln("failed to get config:", err)
+		return
+	}
+
 	ctx := context.Background()
-
-	configFileName, err := getConfigFileName()
-
-	if err != nil {
-		log.Fatalln(err)
-		return
-	}
-
-	cfg, err := config.FromFile(configFileName)
-
-	if err != nil {
-		log.Fatalln(err)
-		return
-	}
-
-	// "postgres://postgres:123456@127.0.0.1:5432/vk_test"
 
 	pg, err := pgxpool.Connect(ctx, cfg.Postgres.URL)
 
