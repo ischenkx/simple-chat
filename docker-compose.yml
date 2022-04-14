@@ -10,6 +10,8 @@ services:
       - "3232:3232"
     links:
       - postgres
+    depends_on:
+      - postgres
   postgres:
     env_file:
       - .env
